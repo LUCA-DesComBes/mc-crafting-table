@@ -56,8 +56,7 @@ const inventoryTable = [1, 2, 2, 1, 3, 1];
 // Coder ici
 const inventoryRows = document.getElementById("inv-r");
 const caseCrafts = document.querySelectorAll(".case-craft");
-const caseResult = document.querySelector('.case-result')
-
+const caseResult = document.querySelector(".case-result");
 
 let pipette = "";
 // let selectedMaterialName = "";
@@ -66,13 +65,13 @@ let selectedMaterialImgSrc = "";
 let btnOldActive = null;
 let caseOldActive = null;
 
+function validTwoArray(arr1, arr2) {
+	for (let i = 0; i < arr1.length; i++) {
+		const recetteItem = arr1[i];
+		const tableItem = arr2[i];
 
-function validTwoArray (arr1, arr2) {
-	for(let i = 0; i < arr1.length; i++) {
-		for(let j = 0; j < arr2.length; j++){
-			if(arr1[i] !== arr2[j]) {
-				return false;
-			}
+		if (recetteItem !== tableItem) {
+			return false;
 		}
 	}
 	return true;
@@ -109,14 +108,23 @@ for (const caseCraft of caseCrafts) {
 
 		if (img == null) return;
 
+		console.log(false);
 		img.src = selectedMaterialImgSrc;
 		img.alt = pipette;
+
+		// for(let i = 0; i < pipette.length; i++) {
+		// 	craftingTable.splice(pickaxeRecipe[i], 1, pipette)
+		// }
+
+			if (pickaxeRecipe.length !== pipette) {
+				craftingTable.splice(pickaxeRecipe.length, 1, pipette);
+				console.log(craftingTable);
+			} 
+
 		let result = validTwoArray(pickaxeRecipe, craftingTable);
 		console.log(result, craftingTable, pickaxeRecipe);
-		
 	});
 }
-
 for (let i = 0; i < inventoryTable.length; i++) {
 	const newItemNumber = inventoryTable[i];
 	const materialName = materials[newItemNumber];
