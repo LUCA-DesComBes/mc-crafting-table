@@ -44,144 +44,150 @@ const axeRecipe = [
 	MATERIAL_AIR_ID,
 ];
 
+const hoeRecipe = [
+	MATERIAL_IRON_INGOT_ID,
+	MATERIAL_IRON_INGOT_ID,
+	MATERIAL_AIR_ID,
+	MATERIAL_AIR_ID,
+	MATERIAL_STICK_ID,
+	MATERIAL_AIR_ID,
+	MATERIAL_AIR_ID,
+	MATERIAL_STICK_ID,
+	MATERIAL_AIR_ID,
+];
+
+const shovelRecipe = [
+	MATERIAL_AIR_ID,
+	MATERIAL_IRON_INGOT_ID,
+	MATERIAL_AIR_ID,
+	MATERIAL_AIR_ID,
+	MATERIAL_STICK_ID,
+	MATERIAL_AIR_ID,
+	MATERIAL_AIR_ID,
+	MATERIAL_STICK_ID,
+	MATERIAL_AIR_ID,
+];
+
+const swordRecipe = [
+	MATERIAL_AIR_ID,
+	MATERIAL_IRON_INGOT_ID,
+	MATERIAL_AIR_ID,
+	MATERIAL_AIR_ID,
+	MATERIAL_IRON_INGOT_ID,
+	MATERIAL_AIR_ID,
+	MATERIAL_AIR_ID,
+	MATERIAL_STICK_ID,
+	MATERIAL_AIR_ID,
+];
+
 const pickaxeRecipeImageSrc = "./assets/iron-pickaxe.webp";
 const axeRecipeImageSrc = "./assets/iron-axe.webp";
+const hoeRecipeImageSrc = "./assets/iron-hoe.webp";
+const shovelRecipeImageSrc = "./assets/iron-shovel.webp";
+const swordRecipeImageSrc = "./assets/iron-sword.webp";
 
-const recipeList = [pickaxeRecipe, axeRecipe];
-const recipeImageSrcList = [pickaxeRecipeImageSrc, axeRecipeImageSrc];
+const recipeList = [pickaxeRecipe, axeRecipe, hoeRecipe, shovelRecipe, swordRecipe];
+const recipeImageSrcList = [pickaxeRecipeImageSrc, axeRecipeImageSrc, hoeRecipeImageSrc, shovelRecipeImageSrc, swordRecipeImageSrc];
 
 const craftingTable = ["", "", "", "", "", "", "", "", ""];
 const inventoryTable = [1, 2, 2, 1, 3, 1];
 
 // Coder ici
-const inventoryRows = document.getElementById("inv-r");
-const caseCrafts = document.querySelectorAll(".case-craft");
-const caseResult = document.querySelector(".case-result");
+const Inventaire = document.getElementById("inv-r");
+const caseCraft = document.querySelectorAll(".case-craft");
+const imgResult = document.getElementById("image-result");
 
 let pipette = "";
-// let selectedMaterialName = "";
-let selectedMaterialImgSrc = "";
-// let selectedButton = null;
+let selecedImgSrc = "";
 let btnOldActive = null;
-let caseOldActive = null;
 
-function validTwoArray(arr1, arr2) {
-	for (let i = 0; i < arr1.length; i++) {
-		const recetteItem = arr1[i];
-		const tableItem = arr2[i];
-
-		if (recetteItem !== tableItem) {
-			return false;
-		}
-	}
-	return true;
-}
-
-function createElement(tag, attributes = {}) {
-	const element = document.createElement(tag);
-	for (const key in attributes) {
-		if (key === "className") element.className = attributes[key];
-		else element.setAttribute(key, attributes[key]);
-	}
-	return element;
-}
 
 function createBtnInventory(name, imgSrc) {
-	const button = document.createElement("button");
-	const img = document.createElement("img");
+    const buttonInventory = document.createElement("button");
+    const imgInventory = document.createElement("img");
 
-	button.classList.add("case-inv");
+    buttonInventory.classList.add("case-inv");
 
-	img.src = imgSrc;
-	img.alt = name;
+    imgInventory.src = imgSrc;
+    imgInventory.alt = name;
 
-	button.appendChild(img);
+    buttonInventory.appendChild(imgInventory);
 
-	return button;
+    return buttonInventory;
 }
 
-for (const caseCraft of caseCrafts) {
-	caseCraft.addEventListener("click", () => {
-		const img = caseCraft.lastElementChild; // .createElement("img");
-
-		console.log(img);
-
-		if (img == null) return;
-
-		console.log(false);
-		img.src = selectedMaterialImgSrc;
-		img.alt = pipette;
-
-		// for(let i = 0; i < pipette.length; i++) {
-		// 	craftingTable.splice(pickaxeRecipe[i], 1, pipette)
-		// }
-
-			if (pickaxeRecipe.length !== pipette) {
-				craftingTable.splice(pickaxeRecipe.length, 1, pipette);
-				console.log(craftingTable);
-			} 
-
-		let result = validTwoArray(pickaxeRecipe, craftingTable);
-		console.log(result, craftingTable, pickaxeRecipe);
-	});
-}
 for (let i = 0; i < inventoryTable.length; i++) {
-	const newItemNumber = inventoryTable[i];
-	const materialName = materials[newItemNumber];
-	const materialImgSrc = materialsImageSrc[newItemNumber];
+    const newItemNumber = inventoryTable[i];
+    const materialName = materials[newItemNumber];
+    const materialImgSrc = materialsImageSrc[newItemNumber];
 
-	const newButton = createBtnInventory(materialName, materialImgSrc);
+    const newButton = createBtnInventory(materialName, materialImgSrc);
 
-	newButton.addEventListener("click", () => {
-		if (pipette == materialName && newButton.classList.contains("active")) {
-			pipette = "";
-			newButton.classList.remove("active");
-			btnOldActive = null;
-			selectedMaterialImgSrc = "";
-		} else {
-			if (btnOldActive) {
-				btnOldActive.classList.remove("active");
-			}
+    newButton.addEventListener("click", () => {
 
-			pipette = materialName;
-			selectedMaterialImgSrc = materialImgSrc;
-			newButton.classList.add("active");
-			btnOldActive = newButton;
-		}
-		//createRecipes(selectedMaterialImgSrc, pipette);
-		console.log(btnOldActive, pipette, selectedMaterialImgSrc);
-	});
-
-	inventoryRows.appendChild(newButton);
+            if (pipette == materialName && newButton.classList.contains("active")) {
+                pipette = "";
+                selecedImgSrc = "";
+                newButton.classList.remove("active");
+            }else {
+                if (btnOldActive != null) {
+                    btnOldActive.classList.remove("active");
+                }
+                pipette = materialName;
+                selecedImgSrc = materialImgSrc;
+                newButton.classList.add("active");
+                btnOldActive = newButton;
+                
+            }
+            
+        // console.log(btnOldActive, pipette, selecedImgSrc);
+    });
+    Inventaire.appendChild(newButton);
 }
-// for (let i = 0; i < inventoryTable.length; i++) {
-// 	const truc = inventoryTable[i];
-// 	const btnInv = createElement("button", { className: "case-inv" });
 
-// 	btnInv.addEventListener("click", () => {
-// 		if (materials[truc] === materials[1]) {
-// 			pipette = MATERIAL_IRON_INGOT_IMG;
-// 			console.log(pipette);
-// 		} else {
-// 			pipette = "";
-// 		}
-// 		if (materials[truc] === materials[2]) {
-// 			pipette = MATERIAL_STICK_IMG;
-// 			console.log(pipette);
-// 		} else {
-// 			pipette = "";
-// 		}
-// 		if (materials[truc] === materials[3]) {
-// 			pipette = MATERIAL_DIAMOND_INGOT_IMG;
-// 			console.log(pipette);
-// 		} else {
-// 			pipette = "";
-// 		}
-// 	});
-// 	const ingotImg = createElement("img", {
-// 		src: materialsImageSrc[truc],
-// 		alt: materials[truc],
-// 	});
-// 	btnInv.appendChild(ingotImg);
-// 	inventoryRows.appendChild(btnInv);
-// }
+function validMaterial(tab1, tab2, result) {
+    for (let i = 0; i <= tab1.length; i++) {
+            if (tab1[i] !== tab2[i]) {
+                return false
+            }
+    }
+    const imgCaseResult = imgResult.querySelector("img");
+    if (imgCaseResult && imgCaseResult.alt == "air" || imgCaseResult && imgCaseResult.alt == "outil") {
+        imgCaseResult.src = result;
+        imgCaseResult.alt = "outil";
+    }
+    return true
+}
+
+for (let i = 0; i < caseCraft.length; i++) {
+	const caseCraftObject = caseCraft[i];
+
+    caseCraftObject.addEventListener("click", () => {
+        const newImg = caseCraftObject.firstElementChild;
+
+        if (newImg == null) return;
+
+        newImg.src = selecedImgSrc;
+        newImg.alt = pipette;
+        
+		craftingTable[i] = pipette;
+
+		for(let j = 0; j < recipeList.length; j++) {
+			const isValidRecipe = validMaterial(recipeList[j], craftingTable);
+
+			if (isValidRecipe != false) {
+				imgResult.src = recipeImageSrcList[j];
+				imgResult.alt = "outil";
+                break;
+			} else {
+				imgResult.src = MATERIAL_AIR_IMG;
+				imgResult.alt = "air"
+			}
+            // console.log(recipeList[j]);
+		}
+        // console.log(validMaterial(pickaxeRecipe, craftingTable, pickaxeRecipeImageSrc));
+        // console.log(validMaterial(axeRecipe, craftingTable, axeRecipeImageSrc));
+        // console.log(craftingTable, pickaxeRecipe);
+        
+    })
+}
